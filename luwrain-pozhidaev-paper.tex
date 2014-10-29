@@ -1,0 +1,902 @@
+% THIS IS SIGPROC-SP.TEX - VERSION 3.1
+% WORKS WITH V3.2SP OF ACM_PROC_ARTICLE-SP.CLS
+% APRIL 2009
+%
+
+\documentclass{acm_proc_article-sp}
+
+\begin{document}
+
+\title{The~Framework for~Accessible Applications:
+Text-Based Case for~Blind People}
+\subtitle{}
+%
+% You need the command \numberofauthors to handle the 'placement
+% and alignment' of the authors beneath the title.
+%
+% For aesthetic reasons, we recommend 'three authors at a time'
+% i.e. three 'name/affiliation blocks' be placed beneath the title.
+%
+% NOTE: You are NOT restricted in how many 'rows' of
+% "name/affiliations" may appear. We just ask that you restrict
+% the number of 'columns' to three.
+%
+% Because of the available 'opening page real-estate'
+% we ask you to refrain from putting more than six authors
+% (two rows with three columns) beneath the article title.
+% More than six makes the first-page appear very cluttered indeed.
+%
+% Use the \alignauthor commands to handle the names
+% and affiliations for an 'aesthetic maximum' of six authors.
+% Add names, affiliations, addresses for
+% the seventh etc. author(s) as the argument for the
+% \additionalauthors command.
+% These 'additional authors' will be output/set for you
+% without further effort on your part as the last section in
+% the body of your article BEFORE References or any Appendices.
+
+\numberofauthors{1} %  in this sample file, there are a *total*
+% of EIGHT authors. SIX appear on the 'first-page' (for formatting
+% reasons) and the remaining two appear in the \additionalauthors section.
+%
+\author{
+% You can go ahead and credit any number of authors here,
+% e.g. one 'row of three' or two rows (consisting of one row of three
+% and a second row of one, two or three).
+%
+% The command \alignauthor (no curly braces needed) should
+% precede each author name, affiliation/snail-mail address and
+% e-mail address. Additionally, tag each line of
+% affiliation/address with \affaddr, and tag the
+% e-mail address with \email.
+%
+% 1st. author
+\alignauthor
+Michael Pozhidaev\\
+       \affaddr{National Research Tomsk State University, Computer Science Department}\\
+       \affaddr{Lenina Avenue, 36, 634050}\\
+       \affaddr{Tomsk, Russia}\\
+       \email{msp@altlinux.org}
+}
+\date{23 October 2014}
+% Just remember to make sure that the TOTAL number of authors
+% is the number that will appear on the first page PLUS the
+% number that will appear in the \additionalauthors section.
+
+\maketitle
+\begin{abstract}
+
+This~paper offers a~Java framework for~creating accessible applications for~blind and visually impaired people 
+as part of~a~proposed general conception
+based on~the~maximum use of~objects filled with~text data only.
+It offers new types of~applications more easily recognizable by~disabled persons,
+helping them to do their work faster and more comfortably.
+Strong and weak points are analyzed.
+The~published prototype of~the~proposed platform is~described 
+as~well as~the~conclusions of~the~performed experiments.
+The~prototype is~implemented on~Java~SE and wrapped by~a~GNU/Linux environment 
+as~a~bootable ISO-image.
+
+\end{abstract}
+
+\category{D.2.2}{Software Engineering}{Design Tools and Techniques}[User interfaces]
+\terms{Experimentation}
+
+\keywords{accessibility,
+blind people,
+user interfaces,
+usability,
+Java,
+API}
+
+\sloppy
+
+\section{Introduction}
+
+During last decade we have seen the~process of~diversification of~information technologies 
+which people use in~their everyday lives.
+If during the~mid 2000-s almost all tasks were performed using Microsoft Windows and desktops only,
+today's solutions  are very different, regardless of whether we are speaking about software platforms 
+(Mac~OS~X, iOs, Android are have a wider distribution and very often can be considered as~real competitors to~Windows)
+or about ways of~interaction with PC's or gadgets (multitouch as a~replacement for~the~mouse).
+In the meantime, blind and visually impaired people (from here on in ``blind people'')
+typically still are~not able to~enjoy all the advantages of~this process,
+mostly because the~accessibility technologies are just add-ons 
+to~interfaces initially designed for~sighted users.
+This kind of~solution can be~considered only a~partial solution 
+since it offers the~general ability to~do the~same things as~everybody
+but sacrifices the~efficiency and level of~personal comfort.
+
+Each time it~is necessary to~create an~application designed and highly accessible for~blind people 
+developers always create a usual application for~graphical user interface (GUI).
+Their main distinguishing characteristics aren't more than 
+features to~enable the ability to~contrast colours and adjust font sizes.
+These functions are only measures for~users with~partial sight.
+If somebody has never dealt with~GUI as~a~sighted user   
+the~complete and proper understanding is~generally impossible (especially for~senior users).
+Respecting the increasing requirements for~an~accessible environment we would  like to~propose 
+a~platform designed completely for~blind people 
+which could be a~stable solution for~the~problems mentioned above.
+
+Speed, comfort and good understandability  usually mean just one thing; keeping things simple.
+The~question is~what kind of~user interface (UI) could be  simple and at~the~same time functionally sufficient.
+The~suggested solution to~an~interface for~blind  people
+is, on~one hand, simple enough and, on~the~other hand,
+could provide  the~replacement for~most GUI~widgets.
+We will discuss the pros and cons, 
+and discover how visualization and speech output can mutually supplement each other.
+The~proposed platform was published on prototypes to~demonstrate 
+implementation on~Java. ##This sentence is a bit confusing. Please go into detail or reorder your sentence structure.##
+It consists of~the~core maintaining launched applications,
+new~interface implementation and a~set of~Java classes making API for~creating new~applications.
+##Are you trying to say simply that it contains all of the core applications and interfaces for creating new applications with Java?##
+This~environment could be~launched on~any OS with the Java virtual machine 
+but we would like to~see it as~a~complete OS on~the~Linux kernel 
+(published prototypes are prepared in~this way).
+
+\section{Text-based environment fundamentals}
+\subsection{General conception}
+
+First of~all, we would like to~describe an~alternative solution  
+to~ensure it~is really suitable and comfortable the~blind.
+There is some prior experience in~this area described below and we would like   to~respect it.
+##There are several existing applications for the blind and we would like to address them below.##
+The~new~environment enable speech output and some visual representation 
+without involving any~screen reading software.
+The~picture on~the~screen remains very important because it is~used by~users with~low vision, 
+though it plays only a very supplementary role now.
+We~suggest splitting the~screen into several rectangular areas, 
+and filling its~entire space with some tiles. 
+Each tile shows some textual data related to~the~corresponding object 
+and is closely associated with~speech output.
+Font size and colour should be~easily adjustable to~suit a~particular user's requirements.
+
+The~method of~how to~constructing a~comfortable and sufficient speech representation for~all~objects needed for~work
+is~one of~the~main goals of~our~research.
+It~is~described in~detail below but, roughly speaking,
+we~are considering all~of~the~usual GUI widgets  in~a~way where no~graphical and visual data is~involved in~their representation.
+Fortunately, there are only a~few cases when it~is~impossible (e.g.~the~web~page cannot be~described in~words without lost of~entirety).
+Let's~consider, for~example, a~text~edit box: 
+there is~nothing graphical about~it, 
+but the~selection of~some part of~the~text with a mouse is~performed through choosing some other colour 
+and this happens~by using visual information.
+Hence, we must invent something else for~text selection but there is no~need to~create anything new for~text~input itself.
+
+The~environment is~purposed for~distribution with~some standard set~of~applications 
+prepared and organized in~a~new~way
+(it isn't interesting to~have any new~platform for~new~applications
+if you still have~to~use usual GUI for~all~other tasks, 
+only the~fully consistent environment could be~attractive).
+At~a~first look it~seems that we~will face tremendous number of~things to~implement, 
+but actually there is a~wide range of~the~libraries for~Java, distributed under the~public licenses,
+so there is no need to do anything from~scratch.
+We should simply prepare a~new~interface for~them with~our~new~platform.
+
+\subsection{Known experience}
+
+Usually blind people use screen readers launched on~GUI 
+but we will not review them  as interested only   in~software designed as~``audio desktops''.
+There are three solutions  known over the~world 
+which follow the~idea of~providing the~speech environment without screen reading,
+all~of~them do~that in~different ways.
+They are Emacspeak \cite{emacspeak}, 
+Dolphin Guide \cite{dolphineguide} and 
+Adriane \cite{adriane}. 
+Emacspeak certainly did a~major impact on the~things we would like to~propose with~this~paper.
+It~is an~add-on for~popular text editor GNU~Emacs \cite{emacs}
+which has a~lot of~additional features covering areas significantly wider than just usual text editing, 
+such~as files management, mail reading, calendar etc. 
+The~main advantage of~Emacspeak is that with some proper training 
+it can give very high speed of~work (that even comparable with~speed of~sighted user).
+We are intended to~respect all~positive parts of~that interesting experience.
+However, unfortunately, it~has a~lot of~restrictions 
+existing mostly as~consequences of~its add-on nature 
+(GNU~Emacs has nothing close to~applications). 
+All~weak characteristics  of~emacspeak have been analyzed  in~our previous publication \cite{luwrain1} in~detailes.
+
+Dolphine Guide is a~high-level screen reader with a~lot of~additional information about user interface 
+for~fixed number of~particular applications.
+It obscures interaction with these applications and replaces it with its own 
+very user-friendly environment.
+Although Dolphin Guide is really able to~be a~solution for~inexperienced users 
+it cannot be considered as~flexible environment providing high speed of~work 
+because it handles only fixed number of use cases.
+In~addition, Dolphin Guide needs a~complete OS (Microsoft Windows) to~work on.
+
+These problems are also actual for~Adriane excepting 
+that it is based on~Gnu/Linux distribution.
+It involves a~number of~applications for~various tasks 
+which were wrapped with speech-enabled interactions.
+Adriane cannot be considered as~a~platform for~constructing new accessible applications 
+because it hasn't any strict conception (although its interface could~be considered as~quite consistent)
+and components it uses are based on~the~Dialog \cite{dialog} utility and Bash scripts \cite{bash}.
+
+\subsection{Pro and contra}
+
+Let consider all reasons why our conception makes sense and in~opposite the~arguments why  it could have some weak characteristics.
+For~statements of~possible critic, which we may expect, 
+we give additional comments why we don't take them serious and crucial. 
+As~a~stronger approach everything is~written 
+like it~would be~a~complete OS,
+the~case of~running the~environment on~Microsoft Windows 
+is~significantly weaker. 
+
+The~statements supporting  our proposal  could be as~follows: 
+
+\begin{enumerate}
+
+\item {
+Users no longer need to~struggle with~GUI and that saves a~lot~of time increasing the~speed of~work. 
+GUI is very unsuitable solution 
+because in~complicated cases blind users should keep in~mind screen structure which they don't see.
+On~desktops and laptops GUI is~useful only with~a~mouse
+which is inaccessible for~blind users.
+With tablet~computers where multitouch is~popular blind users should 
+be able to~touch the~screen in~same position multiple times.
+That is~easy to~do  having visual information 
+but in~speech-enabled case it~turns out as a~very time consuming procedure. 
+Meantime, presence of~GUI is a~completely artificial problem
+because it is~created by other people and isn't something essential for~interaction with~PC.
+}
+
+\item {
+New~type of~interface could be~easier  to~understand 
+for~blind users with a~lack of~experience, especially for~seniors.
+With~GUI it~is necessary to~have proper understanding what it is.
+That is not a~problem for~users who previously used PC as a~sighted user
+but for~those of~them who never saw the~computer screen such kind of~understanding 
+becomes a~really serious problem.
+}
+
+\item {
+General conception and suggested implementation could be~a~platform 
+useful on~mobile cheap laptops as~well as~on~cheap embedded devices based on~the~ARM platform \cite{arm}.
+In~conjunction with~previous term that could be a~really strong argument 
+because it can give access to~becoming popular digital  government services 
+for~wide range of~disabled people.
+This makes it a~solution with social value.
+}
+
+\item {
+For~experienced users there is certain area of~tasks uncovered with existing solutions.
+Usually it is~related with speedy software development,
+preparing materials with~Latex \cite{latex} or Lilypond \cite{lilypond}.
+New~approach could be~well adjusted for~these tasks.
+}
+
+\end{enumerate}
+
+The~statements against our proposal  could be as~follows:
+
+\begin{enumerate}
+
+\item {
+It~is isolated environment.
+This makes blind people more isolated from the~society 
+and blocks their access to~the~software not~included in~new~system.
+}
+
+\item {
+This proposal requires creating some number of~already existing applications,
+e.~g. for~mail reading, news~reading etc.
+}
+
+\item {
+Not all~applications could be~reconsidered with proposed conception.
+For~example, a~web-browser could be~accessible only with~screen reading approach.
+}
+
+\end{enumerate}
+
+Well, there are our answers to~the~states  against new~conception:
+
+\begin{enumerate}
+
+\item {About isolation:}
+\begin{itemize}
+\item {
+Our~conception is best suited to~be a~user accompaniment preferably on~mobile computers,
+while existing desktop systems remain available 
+and everybody is still able to~use a~general purpose OS like Microsoft Windows or Apple Moc~OS~X on~it.
+There is no need to have exactly single universal computer (in~contrast with~mobile phone).
+If it~is launched on~Microsoft Windows since Java let do that easily 
+there is no problem at~all.
+}
+\item {
+The~system isn't totally isolated.
+It can provide access to~command line utilities 
+through Bash or some another shell.
+In~fact, command line utilities are one~of~the~most accessible ways for~interaction for~blind users.
+Although, of~course, it is suited mostly for~experienced users. 
+}
+\item {
+There is~a~significant gap between potentially possible and really available features for~blind users.
+With~GUI we~may think that are not~isolated but it doesn't mean that 
+we are really able to~do everything what is~needed.
+}
+\end{itemize}
+
+\item {About creating of~new software:}
+\begin{itemize}
+\item {
+There is~no~need to~develop anything from~scratch.
+We are~working in~area of~Free and Open source software,
+so can use a~lot of~libraries already created for~Java which is chosen for~our implementation.
+}
+\item {
+According to~Pareto rule \cite{pareto},
+80\% of~needs are covered approximately by~20\% of~features.
+Therefore, we may expect that there is some appropriate level of~functionality which would be~sufficient for~most tasks.
+}
+\end{itemize}
+
+\item {About exceptions:
+yes, there are some exceptions, but we can include their workarounds into our system as~also exceptions.
+Speaking about web-browser, we can take Chromium \cite{chromium} with ChromeVox extension \cite{chromevox}
+which will run outside of~our environment and that will not bring any inconvenience to~user.
+Generally, the~complete OS should be some sort of~``hybrid'' system 
+if it is based on~proposed platform. 
+Some popular applications, like for~photo editing or computer aided design will never be~required 
+because are pointless without visual information.
+}
+\end{enumerate}
+
+\section{The framework description and Luwrain project}
+
+In~this section we will consider all valuable details  
+of~the~Luwrain project which is~proposed as~a~implementation of~the~conception and the~framework describe above.
+Although Luwrain implies some research and experimental tasks 
+we intended  to~get stable product and fully functional OS based on~it 
+suitable for~developers as~well as~for~wide range of~consumers with~sight restrictions.
+Everybody who is interested in~getting complete understanding what Luwrain is and how it~works 
+is~welcomed to~try current prototypes freely published on~corresponding website at http://luwrain.org/.
+
+We guess that it is necessary to~describe this work from~various points of~view 
+as~we~are speaking about not just a~theory but also about exact technical approach.
+The~most of~things described in~sections below should be~reflected  in~Luwrain API
+as~a~set of~Java classes.
+The~Luwrain classes provide various level of~customization.
+For~example, the~class for~list~view needs only a~set of~items 
+and does all job according to~the~conception. 
+However, if~developer would like to~prepare its own controls he/she has everything needed to~do~that.
+Each application for~Luwrain should be~distributed in~the~form of~.jar file 
+as~it~is usual for~Java libraries.
+
+\subsection{Accessible controls}
+
+The~main requirement imposed on~a~set of~controls 
+is to~have functionality equal to~functionality of~GUI.
+Of~cource, except of~evident requirement be~fully accessible for~blind users.
+Speaking about a~control'' we mean here the~items 
+such~as text edits, list~views, menus, tables, forms etc.
+Forms include various things, like edits, check~boxes, some custom controls and so on.
+The~every class of~a~control object should generate output for~screen and for~speech simultaneously and in~such way 
+that output for~speech should be~fully sufficient for~any kind of~work while 
+output for~screen plays only a~supplementary role.
+One addition requirement for~any type of~a~control 
+is~providing access to~any part of~the object 
+without potentially  inaccessible information.
+This is usually very actual for~exploring the~spelling of~any string  in~a~letter-by-letter manner.
+A~lot of~users are unable to~completely rely on~pronunciation of~speech synthesizer.
+
+\begin{description}
+
+\item[Text edits.]
+The~text edits (both single-line and multiline) speak the~letter under cursor on~left-right movements 
+and speak the~line holding the~cursor on~up-down movements.
+On~typing any~letter it~should be~also spoken.
+The~important question is~a~selection of~some text fragment.
+We~guess that the~most convenient way is~set a~special point under the~current cursor position to~mark start of~the~region,
+then go~to~some another position marking end~of~the~region and do one of~the~required operations (copy, cut or delete).
+It~is~a~good idea to~speak a~text fragment being cut, copied, deleted or~pasted.
+On~reaching bounds of~a~text area corresponding notifications should be~issued.
+
+\item[List views and menus.]  
+All~types of~items enumeration should  have a~cursor 
+marking not~any~particular line only but also being free to~point any~character on~this line.
+This is necessary as~previously for~exploring the~spelling of~the~item.
+On~up-down movements   new~item text should be~spoken and~the~cursor should go~to~new line beginning. 
+Every line should always have one addition empty line (how to~know the~text of~a~item if~it is single and there are no ways to~go up-down?).
+
+\item[Tree view.]
+Tree views are also possible.
+We~can treat them as~some~sort of~extension of~a~list view.
+If some particular item has children it gets plus or minus sign for~screen representation 
+and corresponding speech notification is~added.
+Pressing enter button on~such item consistently expands or collapses its subitems.
+The~level of~the~item can be~reflected by~the~indentation on~the~screen and corresponding speech suffixes or prefixes.
+
+\item[Forms.]
+Forms imply a~set of~various controls such~as text edits, check~boxes, drop~down lists etc.
+There are no~problems with them if~construct forms placing each control on~separate line adding corresponding text prefix 
+designating the~name of~the~control.
+All~lists should be~drop~down and item selection of~them should carry~out through additional popup areas (see below).
+There is~one noticeable limitation: each form can contain only one multiline edit 
+and it always should be~placed at~the~bottom of~the form filling the~entire space below all~other controls.
+For~example, such approach is~selected for~area purposed for~composing of~a~mail message.
+It~has recipient address on~the~first line, 
+the~subject on~second, some additional fields,
+but below all~of~them there is a~multiline edit for~message text. 
+\end{description}
+
+We~described some~the~most important controls for~illustration but, of~course, not~all~of~them.
+Others can be~reconsidered in~the~same way as~these. 
+
+There is~one~rather serious problem often faced during the~work on~accessibility technologies:
+it is a~unpredictable amount of~information 
+needed by~a~user in~different situations.
+When user explores a~structure of~a~tree view he/shee should get as~much information as~it~is possible 
+but if he/she looks for~some particular known item only   name is~required to~be~spoken.
+We suggest to~use alternation keys like Ctrl or Alt on~the~keyboard to switch the~mode of~the output.
+For~example, holding the~Ctrl key always skips all~supplementary information, saving only items names. 
+
+And one addition trick usually considered as~rather popular and useful.
+Whereas all controls (lists, texts, trees or forms  can be~represented in~text form in~some or another way, 
+the~feature to~quick search some~text substring can significantly increase the~speed of~work.
+For~forms no~matter  whether this substring appears  in~editable areas or just in controls names,
+it~should be~encountered,
+users easily understand what it~is by~themselves.
+
+\subsection{Applications and tiling}
+
+Each application in~Luwrain gathers several controls.
+Their number and types are defined completely by~purpose of~the~application.
+For~example, mail reader should  consist~of three controls:
+tree view with mail groups (Inbox, Sent etc),
+the~list of~mail messages inside of~particular group and the~text of~the~particular message.
+On~the~screen they should be~placed in~the~same way as~in~usual GUI mail client 
+but for~users who work through speech  only there shouldn't be any association 
+between objects location on the~screen and their behaviour.
+He/she just has to mind that there are three objects and has proper way to~switch between them.
+
+That could be easily achieved if~environment implementation 
+takes complete care of~calculation of~controls position on~the~screen.
+We even think  that there is no need to~have a~way to~choose position manually,
+it~is enough to~have sufficient algorithm giving suited position automatically in~most cases.
+For~that purpose we would like to~suggest one of~them.
+It~takes tree of~tiles, 
+each node of~it has references to~two children and boolean attribute 
+whether this node implies dividing  ina~horizontal or vertical way.
+Given screen width and height, it calculates position of each tile on~the~screen.
+
+\begin{enumerate}
+
+\item {
+Performing Depth-first search on~tiles tree and~calculating 
+how many leaves has each branch of~each node.
+}
+
+\item {
+As~a~recursive procedure do following steps:
+}
+
+\begin{enumerate}
+
+\item{
+Calling the~procedure providing screen width and height as~well as~root of~the~tree. 
+}
+
+\item {
+If~the provided node is a~leaf assigning to~it received screen position.
+}
+
+\item {
+Performing dividing of~received screen area onto two~parts 
+in~proportions, how many leaves there are under each branch, and handling dividing direction (horizontally or vertically).
+After that performing call of~the~procedure for~each branch providing obtained positions.
+}
+\end{enumerate}
+\end{enumerate}
+
+According to~our experience, this~procedure yields rather good dividing for~each application.
+It~is necessary to~describe what an~application is in~Luwrain design.
+First of~all, we would like to~notice that the~term ``application'' doesn't reflect the~exact nature of~implied object.
+Very likely it would be~better to~call that ``applet'' or ``add-on'' because Luwrain applications 
+are executed in~the~same process as~environment itself (although are able to~initiate separate threats) and share with the~environment the~same memory address space.
+
+The~applications are Java classes which objects are registered in~the~corresponding manager.
+There could be~multiple instances of~particular application (e.~g., user can launch several file managers)
+and in~opposite there is special technique to~prevent some others applications from being launched twice (e.~g., multiple copies of~mail fetching application are pointless).
+In~each time currently only one application can be~shown on~screen 
+and it is one which is considered as~active.
+We are thinking about special type of~applications visible permanently 
+(e.~g., for~displaying news feed)
+but still are not sure whether is~is~really necessary or~not.
+Switching between applications is~performed easily  and quickly with Alt+Tab keys combination.
+
+Luwrain distribution implies including a~set of~standard applications.
+They are: 
+double-sided file manager,
+extendable text editor,
+mail reader,
+news reader,
+terminal,
+media player,
+the~application for~office documents preview,
+personal scheduler,
+calendar,
+address book etc.
+Some sort of~applications can be~provided in~the~form of~extensions
+and we would like to~see them as~a~part of~community-driven activity.
+They are mostly the~clients for~popular websites, like 
+Twitter,
+Yandex and Google services,
+payments systems, 
+social networks etc.
+
+It~is necessary to~specially emphasize the~question of~the~clients 
+for~digital government services.
+Their presence in~any~assistive  technologies could have significant social value.
+The~question of~accessible alternative for~office applications remains very arguable.
+As~a~matter of~fact the~office document exchange is~very active and 
+no~doubts that corresponding applications are~needed,
+but a~full functionality which Microsoft Office has is~usually needless.
+With~Luwrain we~intend to~provide such tools 
+but the~set of~their features is~defined by~corresponding Java libraries (see below).
+Office documents representation in~text form should be~worked~out 
+but full pages rendering (e.~g., for~printing) apparently remains impossible.
+As~a~partial measure we suggest to~use non-wysiwyg alternatives, such~as Latex, since they are highly accessible,
+ although require some training and experience. 
+
+\subsection{Events dispatching and popup areas}
+
+The various events dispatching techniques, very likely, are an~essential part of~any UI implementation
+and Luwrain isn't an~exception in~this sense.
+Luwrain has several types of~events with corresponding rules of~their routing.
+They bring information about user actions,
+notifications about changes in~environment and 
+do multithreading synchronization.
+The~last is~very important feature,
+Luwrain allows applications developers initiate so many execution threads as they need 
+but all interaction with~Luwrain core should be done in~multithreading-safe way
+and Luwrain provide some features for~that.
+
+Actually, there is nothing  to~describe in~details 
+except of~one thing: our environment has special type of~areas which applications are able to~show.
+They are so called ``popup'' areas.
+Their main distinguish  is that they can be shown as one method call 
+which ends only on~closing of~corresponding area.
+Since the~environment carries~out in~one single thread 
+this cause some difficulties because popup method call (usually placed in~some event handling code)
+freezes entire event loop execution.
+This~problem is~solved by~implementing multiple event loop instances,
+the~first of~them is a~main environment event loop and each new is~launched for~every new popup area.
+We think it~is a~very usual approach in~UI design.
+
+With~popup areas we can~show various dialogs and menus,
+continuing execution depending on~user choice.
+For~example, a~couple of~popup areas have system-wide meaning.
+First of~them is~the~main menu which idea is~very close to~the~``Start'' menu for~Microsoft Windows.
+The~another one is~a~command line always accessible on~Alt+X key combination.
+With this prompt user is able to~launch  particular application or do some action with system-wide meaning.
+This feature is~very useful when it~is necessary to~do something in~noisy environment.
+For~example, in~some cases it~is easier to~press Alt+x and type ``mail'' than to~open main menu and listen its items.
+This~idea of~Alt+X command prompt was adopted from~Gnu~Emacs but with some modifications.
+
+\subsection{Why Java?}
+
+Luwrain is~implemented mostly on~Java.
+Its environment is~executed completely inside of~Java virtual machine.
+The~main reasons why we use Java is the~large variety of~existing Java libraries
+and Java is currently quite usual language for~any kind of~frameworks and platforms.
+Speaking about libraries, for~instance, if  we are creating a~mail client it isn't necessary to~write all protocol parsers,
+everybody just can take Javamail library \cite{javamail}.
+Actually the~number of~involved libraries is~relatively large,
+we use Apache~POI \cite{poi} for~office documents format processing 
+(exactly a~functionality of~this library defines how good documents support could be),
+Rome \cite{rome} for~RSS parsing  
+and many others.
+
+But the~reasons aren't limited only by~question of~libraries.
+Java has rather stable API wich is changed very carefully and moderately 
+(thoughtless API changing in~our opinion is~one of~the~biggest problems in~world of~Open source libraries).
+In~addition, according to~\cite{javaspeed} 
+current Java speed of~execution is~comparable to~the~speed of~C++
+and that is~rather good result
+(sometimes benchmark resources offers information that Java gives 80\% overhead over C++ time).
+
+Some questions related to~Java remain unsolved. 
+There~are some legal concerns, we can see that corporations sue developers over Java \cite{oraclesue}.
+Next, it is unclear could we build something on Dalvik (or on~coming ART) \cite{dalvik}
+which looks more efficient for~ARM devices.
+Hopefully, these questions could be~solved in~future.
+
+\subsection{System-level services}
+
+If we are speaking about a~complete OS 
+we should mind various services maintaining network connections and other system tasks 
+as~well as~the~way of~interaction between these services and UI inside of~Java virtual machine.
+Current experience in~GNU/Linux world demonstrate tendency towards  
+D-Bus \cite{dbus} as~a~tool for~interprocess communication (IPC).
+Java has corresponding interface to~use D-Bus as~well,
+therefore, we should just choose projects 
+which provide necessary functionality with D-Bus~interface.
+Fortunately, they are present almost for~all~tasks:
+
+\begin{enumerate} 
+
+\item{
+Network manager \cite{nm} for~manipulating network connections
+}
+
+\item {
+Udisks \cite{udisks} for~removable media management
+}
+
+\item {
+VoiceMan \cite{voiceman} for~speech output
+}
+
+\end{enumerate}
+
+Network Manager and Udisks are well-known projects,
+speech server VoiceMan has been developed earlier as~a~part of~Luwrain project 
+but it is implemented as~a~system service on~C++.
+Currently VoiceMan takes the~text to~speak through inet socket,
+but it is just a~temporary measure. 
+
+Actively discussed idea of~Systemd service \cite{systemd}
+proposed by~Lenard Poettering 
+potentially could be~nicely integrated to~the~system we~are discussing.
+The~installation on~a~hard drive can be~performed by~blind person without any~sighted help 
+using live system cloning technique \cite{livecdclone}
+The~main window of~the~Java environment is~shown with X.org server \cite{xorg}
+using a~custom lightweight window manager.
+
+If`Luwrain is~launched on~Microsoft Windows these features will be~inaccessible 
+or redirected to~corresponding Windows components.
+
+\section{Obtained experience and testing}
+
+The~experience we already have consists of~two~parts: 
+general conception testing done with~Emacspeak environment 
+and the~user feedback collected on~publication of~first Luwrain prototype.
+
+Using proposed conception as~it was~implemented in~Emacspeak was really successful 
+(the~author of~this paper successfully graduated the~university and has~done his Ph.D. thesis having the~machine with~it).
+The~speed of~work is~really high and some tricky operations,
+like the~installation without sighted help, 
+can be achieved.
+Meantime, it~is still difficult to~spread this~experience over other people 
+because using GNU~Emacs and Emacspeak requires a~lot of~technical knowledge.
+Some design problems of~GNU~Emacs (e.~g., absence of~such entity as~application at~all)
+don't allow consider it~as~a~platform satisfying modern trends for~~popular products.
+
+First Luwrain prototype published in~the~form of~bootable ISO-image 
+has been presented on~March 1st, 2014.
+The~feedback was obtained from~two categories of~users: from newbies and from~experienced users.
+The~feedback from~newbies is~more valuable because our~system should
+match the~expectations of~wide~range of~users.
+With very short prior comments users easily understood what they should do if~they would reach some particular position 
+as~well as~to~get some application or object opened.
+In~future these comments can be~offered as~brief guide on~system startup.
+The~experienced users wanted to~treat potential success or failure of~the~system 
+as~highly dependent on~chances to~get it~first stable release
+because this~work obviously require a~lot~of development resources.
+
+After the~discussions with~foreign communities 
+the~authors may expect that there could be~some interest 
+in~solving accessibility problems exactly through~such specialized environments.
+
+\section{Conclusions}
+
+We~have describe all~basic questions related 
+to~special framework for~developing applications for~blind and visually impaired people.
+If~this product could be implemented in~all details
+blind users would get free tool for~the~most of~their everyday operations.
+With it they could read and write mail, track news 
+listen music and books etc.
+All of these things become available  in easy way 
+and  it is also very important.
+We omit the~details of~possible user perception 
+because with this paper the~description is~focused on~Luwrain as~a~framework for~creating accessible applications.
+
+The~suggested approach should be~considered very carefully because  the~accessibility technologies 
+always imply some amount of~things impossible totally.
+This~fact is~quite obvious, 
+for~example, there is~no technologies (and very likely will not appear  for~observable future)
+which could be able to~describe in~words an~arbitrary picture.
+Blind people never be able to~do computer aided design and some another tasks with~visual nature.
+We should look for~hopefully sufficient solution but not~perfect ones.
+With this admission, the~project authors are strongly convinced the~proposed conception could solve some rather tough tasks.
+To~obtain it we spent more than ten years of~research work with large number of~experiments.
+
+It~is~necessary to~treat properly our arguments against GUI.
+Text-based environment should not be~taken as~a~competitor to~GUI.
+With some circumstances the~existing  screen reading solutions for~Microsoft Windows, GNOME or Mac~OS~X
+can be the~only possible.
+For~example, if~somebody must use the~same applications as~everybody in~school or university.
+Surely, the~solutions in~style of~audio desktops 
+should be~aimed at~the~sectors left uncovered with~screen readers.
+
+We~are still speaking about the~work which is~staying just at~the~phase of~presenting first prototypes.
+And the~goal number one is~to~get it~finished.
+The~real value of~this conception can be~measured only by~probability do~that.
+If~we~are able to~discover some technical questions, 
+another things, related to~the~available models for~such work, remain still obscured.
+On~the~one~hand, this project is Free and Open source, meaning it is non-profitable,
+on~another hand, it~could have some social value. 
+The~question whether there could be~development models,  more suitable for~this~combination,  or not 
+isn't less important than any~technical discussion.
+
+%%\bibliographystyle{abbrv}
+%%\bibliography{pozhidaev-luwrain}
+
+\begin{thebibliography}{10}
+
+\bibitem{poi}
+D.~V. Ajay~Vohra.
+\newblock Use jakarta poi to generate excel spreadsheets from xml documents.
+\newblock
+  http://www.javaworld.com/article/2076189/enterprise-java/book-excerpt--conve%
+rting-xml-to-spreadsheet--and-vice-versa.html, 2006.
+\newblock Retrieved May 27 2014.
+
+\bibitem{dolphineguide}
+Dolphin Computer Access Ltd.
+\newblock Dolphin guide.
+\newblock http://www.yourdolphin.com/productdetail.asp?id=30, 2014.
+\newblock Retrieved May 27 2014.
+
+\bibitem{rome}
+M.~Fortner.
+\newblock All roads lead to rome.
+\newblock http://www.jroller.com/phidias/entry/ all\_roads\_lead\_to\_rome,
+  2009.
+\newblock Retrieved May 27 2014.
+
+\bibitem{javamail}
+E.~R. Harold.
+\newblock {\em JavaMail API}.
+\newblock O'Reilly Media, 2013.
+
+\bibitem{dalvik}
+D.~Helleberg.
+\newblock Android internals: Art in practice.
+\newblock
+  http://blog.dominik-helleberg.de/2014/01/28/android-internals-art-in-practic%
+e/, 2014.
+\newblock Retrieved May 27 2014.
+
+\bibitem{oraclesue}
+B.~Kendall.
+\newblock Oracle wins ruling in case against google over java.
+\newblock
+  http://online.wsj.com/articles/court-says-oracle-software-code-entitled-to-c%
+opyright-protection-1399652818, 2014.
+\newblock Retrieved May 27 2014.
+
+\bibitem{lilypond}
+P.~Kirn.
+\newblock Lilypond: Free, beautiful music notation engraving for anyone.
+\newblock
+  http://createdigitalmusic.com/2010/05/14/lilypond-free-beautiful-music-notat%
+ion-engraving-for-anyone, 2014.
+\newblock Retrieved May 27 2014.
+
+\bibitem{adriane}
+K.~Knopper.
+\newblock Adriane --- audio desktop reference implementation and networking
+  environment.
+\newblock http://www.knopper.net/knoppix-adriane/index-en.html, 2014.
+\newblock Retrieved May 27 2014.
+
+\bibitem{pareto}
+R.~Koch.
+\newblock {\em The 80/20 Principal}.
+\newblock NICHOLAS BREALEY PUBLISHING, LONDON, 1998.
+
+\bibitem{livecdclone}
+N.~Koneri.
+\newblock Copy your linux install to a different partition or drive.
+\newblock
+  http://www.linuxjournal.com/content/copy-your-linux-install-different-partit%
+ion-or-drive, 2009.
+\newblock Retrieved May 27 2014.
+
+\bibitem{latex}
+L.~Lamport.
+\newblock {\em LaTeX: A Document Preparation System}.
+\newblock Addison-Wesley Publishing Company, 2 edition, 1994.
+
+\bibitem{chromium}
+R.~Lerner.
+\newblock Switching to chrom(ium).
+\newblock http://www.linuxjournal.com/content/switching-chromium, 2013.
+\newblock Retrieved May 27 2014.
+
+\bibitem{dbus}
+R.~Love.
+\newblock Get on the d-bus.
+\newblock http://www.linuxjournal.com/article/7744, 2005.
+\newblock Retrieved May 27 2014.
+
+\bibitem{bash}
+C.~Newham.
+\newblock {\em Learning the bash Shell}.
+\newblock O'Reilly Media, 3 edition, 2005.
+
+\bibitem{javaspeed}
+Oracle~corp.
+\newblock Java hotspot™ virtual machine performance enhancements.
+\newblock
+  http://docs.oracle.com/javase/7/docs/technotes/ guides/vm/performance-enhance%
+ments-7.html, 2014.
+\newblock Retrieved May 27 2014.
+
+\bibitem{systemd}
+L.~Poettering.
+\newblock systemd, two years later.
+\newblock https://archive.fosdem.org/2013/interviews/2013-lennart-poettering/,
+  2013.
+\newblock Retrieved May 27 2014.
+
+\bibitem{voiceman}
+M.~Pozhidaev.
+\newblock Speech server voiceman.
+\newblock http://marigostra.com/projects/voiceman/, 2013.
+\newblock Retrieved May 27 2014.
+
+\bibitem{luwrain1}
+M.~Pozhidaev.
+\newblock The text-based environment for blind persons: conception and
+  operating system design.
+\newblock {\em Mezhdunarodnyj nauchno-issledovatelskij zhurnal}, 2:63--66, Feb.
+  2013.
+
+\bibitem{chromevox}
+T.V~Raman.
+\newblock Chromevox: built-in spoken feedback for chrome os.
+\newblock
+  http://googlecode.blogspot.com/2011/05/chromevox-built-in-spoken-feedback-fo%
+r.html, 2011.
+\newblock Retrieved May 27 2014.
+
+\bibitem{emacspeak}
+T.V~Raman.
+\newblock Emacspeak --- the complete audio desktop.
+\newblock http://emacspeak.sourceforge.net/, 2014.
+\newblock Retrieved May 27 2014.
+
+\bibitem{xorg}
+L.~Shiman.
+\newblock X.org foundation releases x window system x11r6.7.
+\newblock http://lwn.net/Articles/79302/, 2004.
+\newblock Retrieved May 27 2014.
+
+\bibitem{emacs}
+R.~Stallman.
+\newblock Gnu emacs manual.
+\newblock http://www.gnu.org/software/emacs/manual/pdf/ emacs.pdf, 2013.
+\newblock Retrieved May 27 2014.
+
+\bibitem{dialog}
+J.~Tranter.
+\newblock Dialog: An introductory tutorial.
+\newblock http://www.linuxjournal.com/article/2807, Sept. 1994.
+\newblock Retrieved May 27 2014.
+
+\bibitem{arm}
+J.~W. Valvano.
+\newblock {\em Embedded Systems: Introduction to ARM Cortex-M Microcontrollers
+  cover}.
+\newblock CreateSpace Independent Publishing Platform, 2012.
+
+\bibitem{nm}
+R.~Yuen.
+\newblock Introducing networkmanager.
+\newblock http://www.redhat.com/magazine/003jan05/features/ networkmanager/,
+  2005.
+\newblock Retrieved May 27 2014.
+
+\bibitem{udisks}
+D.~Zeuthen.
+\newblock Simpler, faster, better.
+\newblock http://davidz25.blogspot.com/2012/03/simpler-faster-better.html,
+  2012.
+\newblock Retrieved May 27 2014.
+
+\end{thebibliography}
+
+\balancecolumns
+\end{document}
