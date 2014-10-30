@@ -162,63 +162,62 @@ but the~selection of~some part of~the~text with a mouse is~performed through cho
 and this happens~by using visual information.
 Hence, we must invent something else for~text selection but there is no~need to~create anything new for~text~input itself.
 
-The~environment is~purposed for~distribution with~some standard set~of~applications 
+The~environment is~designed for~distribution with~some standard set~of~applications 
 prepared and organized in~a~new~way
 (it isn't interesting to~have any new~platform for~new~applications
 if you still have~to~use usual GUI for~all~other tasks, 
-only the~fully consistent environment could be~attractive).
-At~a~first look it~seems that we~will face tremendous number of~things to~implement, 
-but actually there is a~wide range of~the~libraries for~Java, distributed under the~public licenses,
+only the~fully consistent environment could be~attractive##Please revise. Difficult to understand exact meaning.##).
+At~first glance it~seems that we~will face a tremendous number of~new functions to~implement, 
+but actually there is a~wide range of~libraries for~Java, distributed under public licenses;
 so there is no need to do anything from~scratch.
 We should simply prepare a~new~interface for~them with~our~new~platform.
 
 \subsection{Known experience}
 
-Usually blind people use screen readers launched on~GUI 
-but we will not review them  as interested only   in~software designed as~``audio desktops''.
-There are three solutions  known over the~world 
-which follow the~idea of~providing the~speech environment without screen reading,
-all~of~them do~that in~different ways.
+Usually blind people use screen readers launched on~a~GUI, 
+but we will not review them as we~are interested only in~software designed as~``audio desktops''.
+There are currently three solutions which can be considered as providing a speech environment without screen reading.
+All~of~them accomplish this in~different ways.
 They are Emacspeak \cite{emacspeak}, 
 Dolphin Guide \cite{dolphineguide} and 
 Adriane \cite{adriane}. 
-Emacspeak certainly did a~major impact on the~things we would like to~propose with~this~paper.
-It~is an~add-on for~popular text editor GNU~Emacs \cite{emacs}
+Emacspeak certainly had a~major impact on the~outcome of~this~paper.
+It~is an~add-on for~the~popular text editor GNU~Emacs \cite{emacs}
 which has a~lot of~additional features covering areas significantly wider than just usual text editing, 
-such~as files management, mail reading, calendar etc. 
+such~as file management, mail reading, calendar etc. 
 The~main advantage of~Emacspeak is that with some proper training 
-it can give very high speed of~work (that even comparable with~speed of~sighted user).
-We are intended to~respect all~positive parts of~that interesting experience.
+it can help users to~be~highly efficient(almost to the level of~a~sighted user).
+We~are wanted to~keep all~of~the~positive parts of~that interesting experience.
 However, unfortunately, it~has a~lot of~restrictions 
-existing mostly as~consequences of~its add-on nature 
-(GNU~Emacs has nothing close to~applications). 
-All~weak characteristics  of~emacspeak have been analyzed  in~our previous publication \cite{luwrain1} in~detailes.
+existing mostly as~a~consequence of~its add-on nature 
+(GNU~Emacs has nothing close to~applications##Please explain##). 
+All~weak points  of~emacspeak have been analyzed  in~our previous publication \cite{luwrain1} in~detail.
 
 Dolphine Guide is a~high-level screen reader with a~lot of~additional information about user interface 
-for~fixed number of~particular applications.
+for~a~fixed number of~particular applications.
 It obscures interaction with these applications and replaces it with its own 
 very user-friendly environment.
-Although Dolphin Guide is really able to~be a~solution for~inexperienced users 
-it cannot be considered as~flexible environment providing high speed of~work 
-because it handles only fixed number of use cases.
-In~addition, Dolphin Guide needs a~complete OS (Microsoft Windows) to~work on.
+Although Dolphin Guide is able to~be a~solution for~inexperienced users 
+it cannot be considered as~a~flexible environment providing efficiency for users 
+because it handles only a~fixed number of use cases.
+In~addition, Dolphin Guide needs a~complete OS (Microsoft Windows) to~work.
 
-These problems are also actual for~Adriane excepting 
-that it is based on~Gnu/Linux distribution.
+These problems are also inherent in~Adriane except 
+that it is based on~a~Gnu/Linux distribution.
 It involves a~number of~applications for~various tasks 
 which were wrapped with speech-enabled interactions.
 Adriane cannot be considered as~a~platform for~constructing new accessible applications 
-because it hasn't any strict conception (although its interface could~be considered as~quite consistent)
-and components it uses are based on~the~Dialog \cite{dialog} utility and Bash scripts \cite{bash}.
+because it hasn't any strict conception##Please explain.## (although its interface could~be considered as~quite consistent)
+and the~components it uses are based on~the~Dialog \cite{dialog} utility and Bash scripts \cite{bash}.
 
-\subsection{Pro and contra}
+\subsection{Pros and Cons}
 
-Let consider all reasons why our conception makes sense and in~opposite the~arguments why  it could have some weak characteristics.
-For~statements of~possible critic, which we may expect, 
-we give additional comments why we don't take them serious and crucial. 
-As~a~stronger approach everything is~written 
-like it~would be~a~complete OS,
-the~case of~running the~environment on~Microsoft Windows 
+Let~us consider all the reasons why our application makes sense and look at~arguments for~why  it could have some weak characteristics.
+To respond to criticism, which we may expect, 
+we~will give additional comments for~why we don't take them seriously and don't think these criticisms are crucial. 
+As~a~stronger approach, everything is~written 
+like it~would be~as~a~complete OS, and we~will also look at why
+the~case of~running in~an~environment on~Microsoft Windows 
 is~significantly weaker. 
 
 The~statements supporting  our proposal  could be as~follows: 
@@ -226,54 +225,53 @@ The~statements supporting  our proposal  could be as~follows:
 \begin{enumerate}
 
 \item {
-Users no longer need to~struggle with~GUI and that saves a~lot~of time increasing the~speed of~work. 
-GUI is very unsuitable solution 
-because in~complicated cases blind users should keep in~mind screen structure which they don't see.
-On~desktops and laptops GUI is~useful only with~a~mouse
+Users no longer need to~struggle with~GUI and that saves a~lot~of time, increasing efficiency. 
+GUI is a~very unsuitable solution 
+because in~complicated cases blind users should reference a~screen structure which they don't see.
+On~desktops and laptops, GUI is~useful only with~a~mouse,
 which is inaccessible for~blind users.
-With tablet~computers where multitouch is~popular blind users should 
+With tablet~computers, where multitouch is~popular, blind users should 
 be able to~touch the~screen in~same position multiple times.
-That is~easy to~do  having visual information 
-but in~speech-enabled case it~turns out as a~very time consuming procedure. 
-Meantime, presence of~GUI is a~completely artificial problem
-because it is~created by other people and isn't something essential for~interaction with~PC.
+That is~easy to~do  having visual information, 
+but in~our~speech-enabled case it~turns out as a~very time consuming procedure. 
+In~the~meantime, the presence of~GUI is a~completely artificial problem
+because it is~created by other people##What do you mean by other people?## and isn't something essential for~interaction with~a~PC.
 }
 
 \item {
-New~type of~interface could be~easier  to~understand 
-for~blind users with a~lack of~experience, especially for~seniors.
-With~GUI it~is necessary to~have proper understanding what it is.
-That is not a~problem for~users who previously used PC as a~sighted user
-but for~those of~them who never saw the~computer screen such kind of~understanding 
+A~new~type of~interface could be~easier  to~understand 
+for~blind users with a~lack of~experience with computers, especially seniors.
+With~GUI it~is necessary to~have a~proper understanding of~what it is.
+That is not a~problem for~users who have~previously used a~PC as a~sighted user.
+But for~those who have never seen a~computer screen such understanding 
 becomes a~really serious problem.
 }
 
 \item {
-General conception and suggested implementation could be~a~platform 
-useful on~mobile cheap laptops as~well as~on~cheap embedded devices based on~the~ARM platform \cite{arm}.
-In~conjunction with~previous term that could be a~really strong argument 
-because it can give access to~becoming popular digital  government services 
-for~wide range of~disabled people.
+The general conception and suggested implementation could be~a~platform 
+useful on~mobile laptops as~well as~on embedded devices based on~the~ARM platform \cite{arm}.
+In~conjunction with~previous term ##Please explain. Do you want to say the ‘previous sentence’?## this could have social value as~it
+would now give access to~a~wide range of~digital services for~disabled people.
 This makes it a~solution with social value.
 }
 
 \item {
-For~experienced users there is certain area of~tasks uncovered with existing solutions.
-Usually it is~related with speedy software development,
+For~experienced users there are certain tasks that~can~be uncovered with existing solutions.
+Usually this is~related to~speedy software development,
 preparing materials with~Latex \cite{latex} or Lilypond \cite{lilypond}.
-New~approach could be~well adjusted for~these tasks.
+A new~approach could be~well adjusted for~these tasks.
 }
 
 \end{enumerate}
 
-The~statements against our proposal  could be as~follows:
+Criticism of~our~proposal  could be as~follows:
 
 \begin{enumerate}
 
 \item {
-It~is isolated environment.
-This makes blind people more isolated from the~society 
-and blocks their access to~the~software not~included in~new~system.
+It~is in~an~isolated environment.
+This makes blind people more isolated from society 
+and blocks their access to~software not~included in~the~new~system.
 }
 
 \item {
@@ -282,13 +280,13 @@ e.~g. for~mail reading, news~reading etc.
 }
 
 \item {
-Not all~applications could be~reconsidered with proposed conception.
-For~example, a~web-browser could be~accessible only with~screen reading approach.
+Not all~applications could be~reconsidered with the~proposed conception.
+For~example, a~web-browser could be~accessible only with~the~screen reading approach.
 }
 
 \end{enumerate}
 
-Well, there are our answers to~the~states  against new~conception:
+Our responses to such criticism would be~as~follows:
 
 \begin{enumerate}
 
@@ -298,124 +296,123 @@ Well, there are our answers to~the~states  against new~conception:
 Our~conception is best suited to~be a~user accompaniment preferably on~mobile computers,
 while existing desktop systems remain available 
 and everybody is still able to~use a~general purpose OS like Microsoft Windows or Apple Moc~OS~X on~it.
-There is no need to have exactly single universal computer (in~contrast with~mobile phone).
-If it~is launched on~Microsoft Windows since Java let do that easily 
-there is no problem at~all.
+There is no need to have a~specific single universal computer (in~contrast with~mobile phone).
+If it~is launched on~Microsoft Windows. Java will be~able to~make this happens.
 }
 \item {
 The~system isn't totally isolated.
 It can provide access to~command line utilities 
-through Bash or some another shell.
+through Bash or some other shell.
 In~fact, command line utilities are one~of~the~most accessible ways for~interaction for~blind users.
 Although, of~course, it is suited mostly for~experienced users. 
 }
 \item {
 There is~a~significant gap between potentially possible and really available features for~blind users.
-With~GUI we~may think that are not~isolated but it doesn't mean that 
-we are really able to~do everything what is~needed.
+With~GUI we~may think that they~are not~isolated but it doesn't mean that 
+we are really able to~do everything that is~needed.
 }
 \end{itemize}
 
-\item {About creating of~new software:}
+\item {About creating new software:}
 \begin{itemize}
 \item {
 There is~no~need to~develop anything from~scratch.
-We are~working in~area of~Free and Open source software,
-so can use a~lot of~libraries already created for~Java which is chosen for~our implementation.
+We are~working in~the~area of~Free and Open source software,
+so we~can use a~lot of~libraries already created for~Java for~our implementation.
 }
 \item {
-According to~Pareto rule \cite{pareto},
-80\% of~needs are covered approximately by~20\% of~features.
+According to~the~Pareto rule \cite{pareto},
+80\% of~software needs are covered by~approximately 20\% of~the~features in the software.
 Therefore, we may expect that there is some appropriate level of~functionality which would be~sufficient for~most tasks.
 }
 \end{itemize}
 
 \item {About exceptions:
-yes, there are some exceptions, but we can include their workarounds into our system as~also exceptions.
-Speaking about web-browser, we can take Chromium \cite{chromium} with ChromeVox extension \cite{chromevox}
-which will run outside of~our environment and that will not bring any inconvenience to~user.
+yes, there are some exceptions, but we can include their workarounds into our system as~exceptions.
+Speaking about the web-browser, we can take Chromium \cite{chromium} with the~ChromeVox extension \cite{chromevox}
+which will run outside of~our environment and that will not bring any inconvenience to~the~user.
 Generally, the~complete OS should be some sort of~``hybrid'' system 
-if it is based on~proposed platform. 
-Some popular applications, like for~photo editing or computer aided design will never be~required 
-because are pointless without visual information.
+if it is based on~the~proposed platform. 
+Some popular applications, like photo editing or computer aided design will never be~required 
+because they~are pointless without visual information.
 }
 \end{enumerate}
 
 \section{The framework description and Luwrain project}
 
-In~this section we will consider all valuable details  
-of~the~Luwrain project which is~proposed as~a~implementation of~the~conception and the~framework describe above.
-Although Luwrain implies some research and experimental tasks 
-we intended  to~get stable product and fully functional OS based on~it 
-suitable for~developers as~well as~for~wide range of~consumers with~sight restrictions.
-Everybody who is interested in~getting complete understanding what Luwrain is and how it~works 
-is~welcomed to~try current prototypes freely published on~corresponding website at http://luwrain.org/.
+In~this section we will consider all~of~the~valuable details  
+of~the~Luwrain project which we~proposed as~an~implementation of~the~conception and the~framework described above.
+Although Luwrain includes some research and experimental tasks 
+we intended  to~get a~stable product and fully functional OS based on~it 
+suitable for~developers as~well as~for~a~wide range of~consumers with~sight restrictions.
+Anybody who is interested in~getting a~complete understanding of~what Luwrain is and how it~works 
+is~welcomed to~try current prototypes freely published on~the~corresponding website at http://luwrain.org/.
 
 We guess that it is necessary to~describe this work from~various points of~view 
-as~we~are speaking about not just a~theory but also about exact technical approach.
-The~most of~things described in~sections below should be~reflected  in~Luwrain API
+as~we~are speaking about not just a~theory but also about an~exact technical approach.
+Most things described in~the~sections below should be~reflected  in~the~Luwrain API
 as~a~set of~Java classes.
-The~Luwrain classes provide various level of~customization.
+The~Luwrain classes provide various levels of~customization.
 For~example, the~class for~list~view needs only a~set of~items 
-and does all job according to~the~conception. 
-However, if~developer would like to~prepare its own controls he/she has everything needed to~do~that.
+and does all tasks according to~the~conception. 
+However, if~a~developer would like to~prepare his/her own controls, he/she has everything needed to~do~that.
 Each application for~Luwrain should be~distributed in~the~form of~.jar file 
-as~it~is usual for~Java libraries.
+as~is usual for~Java libraries.
 
 \subsection{Accessible controls}
 
 The~main requirement imposed on~a~set of~controls 
-is to~have functionality equal to~functionality of~GUI.
-Of~cource, except of~evident requirement be~fully accessible for~blind users.
-Speaking about a~control'' we mean here the~items 
+is to~have functionality equal to~that of~GUI.
+Of~course, except obviously, the~requirement of~being~fully accessible for~blind users.
+Speaking about a~control'' we mean here items 
 such~as text edits, list~views, menus, tables, forms etc.
 Forms include various things, like edits, check~boxes, some custom controls and so on.
-The~every class of~a~control object should generate output for~screen and for~speech simultaneously and in~such way 
+Every class of~a~control object should generate output for~the~screen and for~speech simultaneously and in~such way 
 that output for~speech should be~fully sufficient for~any kind of~work while 
-output for~screen plays only a~supplementary role.
-One addition requirement for~any type of~a~control 
+output for~the~screen plays only a~supplementary role.
+One additional requirement for~any type of~a~control 
 is~providing access to~any part of~the object 
 without potentially  inaccessible information.
-This is usually very actual for~exploring the~spelling of~any string  in~a~letter-by-letter manner.
-A~lot of~users are unable to~completely rely on~pronunciation of~speech synthesizer.
+This is usually very relevant for~exploring the~spelling of~any string  in~a~letter-by-letter manner.
+A~lot of~users are unable to~completely rely on~the~pronunciation of~a~speech synthesizer.
 
 \begin{description}
 
 \item[Text edits.]
-The~text edits (both single-line and multiline) speak the~letter under cursor on~left-right movements 
+The~text edits (both single-line and multiline) speak the~letter under the~cursor on~left-right movements 
 and speak the~line holding the~cursor on~up-down movements.
-On~typing any~letter it~should be~also spoken.
-The~important question is~a~selection of~some text fragment.
-We~guess that the~most convenient way is~set a~special point under the~current cursor position to~mark start of~the~region,
-then go~to~some another position marking end~of~the~region and do one of~the~required operations (copy, cut or delete).
-It~is~a~good idea to~speak a~text fragment being cut, copied, deleted or~pasted.
-On~reaching bounds of~a~text area corresponding notifications should be~issued.
+On~typing any~letter, the~letter should also be~spoken.
+The~important question is~the~selection of~some text fragment.
+We~guess that the~most convenient way is~to~set a~special point under the~current cursor position to~mark the~start of~the~region,
+then go~to~some other position marking the~end~of~the~region and do one of~the~required operations (copy, cut or delete).
+It~is~a~good idea to~pronounce a~text fragment being cut, copied, deleted or~pasted.
+On~reaching the~bounds of~a~text area, a~corresponding notification should be~issued.
 
 \item[List views and menus.]  
-All~types of~items enumeration should  have a~cursor 
-marking not~any~particular line only but also being free to~point any~character on~this line.
-This is necessary as~previously for~exploring the~spelling of~the~item.
-On~up-down movements   new~item text should be~spoken and~the~cursor should go~to~new line beginning. 
-Every line should always have one addition empty line (how to~know the~text of~a~item if~it is single and there are no ways to~go up-down?).
+All~types of~items of~enumeration should  have a~cursor 
+marking not~only a~particular line, but also being free to~point to~any~character on~this line.
+This is necessary as~mentioned before for~exploring the~spelling of~the~item.
+On~up-down movements   a~new~item of~text should be~spoken and~the~cursor should go~to~the~beginning of~the~new line. 
+Every line should always have one additional empty line (otherwise, how could we know the~text of~an~item if~it is single and there is no way to~go up-down?).
 
 \item[Tree view.]
 Tree views are also possible.
 We~can treat them as~some~sort of~extension of~a~list view.
-If some particular item has children it gets plus or minus sign for~screen representation 
-and corresponding speech notification is~added.
-Pressing enter button on~such item consistently expands or collapses its subitems.
+If some particular item has children, it gets a~plus or a~minus sign for~screen representation 
+and a~corresponding speech notification is~added.
+Pressing the~enter button on~such an~item consistently expands or collapses its subitems.
 The~level of~the~item can be~reflected by~the~indentation on~the~screen and corresponding speech suffixes or prefixes.
 
 \item[Forms.]
 Forms imply a~set of~various controls such~as text edits, check~boxes, drop~down lists etc.
-There are no~problems with them if~construct forms placing each control on~separate line adding corresponding text prefix 
+There are no~problems with them if~the~constructed forms place each control on~a~separate line and adds a~corresponding text prefix 
 designating the~name of~the~control.
-All~lists should be~drop~down and item selection of~them should carry~out through additional popup areas (see below).
+All~lists should be~drop~down and the~item selection should be~carried~out through additional popup areas (see below).
 There is~one noticeable limitation: each form can contain only one multiline edit 
 and it always should be~placed at~the~bottom of~the form filling the~entire space below all~other controls.
-For~example, such approach is~selected for~area purposed for~composing of~a~mail message.
-It~has recipient address on~the~first line, 
-the~subject on~second, some additional fields,
+For~example, such an~approach is~selected for~an~area with the purpose of~composing a~mail message.
+It~has a~recipient address on~the~first line, 
+and then the~subject on~second, some additional fields,
 but below all~of~them there is a~multiline edit for~message text. 
 \end{description}
 
