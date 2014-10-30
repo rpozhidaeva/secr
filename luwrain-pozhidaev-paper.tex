@@ -419,89 +419,89 @@ but below all~of~them there is a~multiline edit for~message text.
 We~described some~the~most important controls for~illustration but, of~course, not~all~of~them.
 Others can be~reconsidered in~the~same way as~these. 
 
-There is~one~rather serious problem often faced during the~work on~accessibility technologies:
-it is a~unpredictable amount of~information 
+There is~one~rather serious problem often faced during work on~accessibility technologies:
+there is an~unpredictable amount of~information 
 needed by~a~user in~different situations.
-When user explores a~structure of~a~tree view he/shee should get as~much information as~it~is possible 
-but if he/she looks for~some particular known item only   name is~required to~be~spoken.
-We suggest to~use alternation keys like Ctrl or Alt on~the~keyboard to switch the~mode of~the output.
-For~example, holding the~Ctrl key always skips all~supplementary information, saving only items names. 
+When a~user explores a~structure of~a~tree view he/she should get as~much information as possible, 
+but if he/she looks for~some particular known item only  the~name is~required to~be~spoken.
+We suggest to~use alt keys like Ctrl or Alt on~the~keyboard to switch the~mode of~output.
+For~example, holding the~Ctrl key always skips all~supplementary information, saving only the~items names. 
 
-And one addition trick usually considered as~rather popular and useful.
-Whereas all controls (lists, texts, trees or forms  can be~represented in~text form in~some or another way, 
-the~feature to~quick search some~text substring can significantly increase the~speed of~work.
-For~forms no~matter  whether this substring appears  in~editable areas or just in controls names,
-it~should be~encountered,
-users easily understand what it~is by~themselves.
+We should mention one additional trick usually considered as~rather popular and useful.
+Whereas all controls (lists, texts, trees or forms  can be~represented in~text form in~one or an other way, 
+a~feature to~quickly search some~text substring can significantly increase efficiency.
+For~forms no~matter  whether this substring appears  in~editable areas or just in control names,
+it~should be,
+so that users easily understand what it~is by~themselves.
 
 \subsection{Applications and tiling}
 
 Each application in~Luwrain gathers several controls.
-Their number and types are defined completely by~purpose of~the~application.
-For~example, mail reader should  consist~of three controls:
-tree view with mail groups (Inbox, Sent etc),
-the~list of~mail messages inside of~particular group and the~text of~the~particular message.
-On~the~screen they should be~placed in~the~same way as~in~usual GUI mail client 
+Their number and types are defined completely by~the~purpose of~the~application.
+For~example, a~mail reader should  consist~of three controls:
+tree view with mail groups (Inbox, Sent Items, etc),
+the~list of~mail messages inside a~particular group and the~text of~a~particular message.
+On~the~screen they should be~placed in~the~same way as~in~a~usual GUI mail client 
 but for~users who work through speech  only there shouldn't be any association 
-between objects location on the~screen and their behaviour.
-He/she just has to mind that there are three objects and has proper way to~switch between them.
+between the~objects location on the~screen and their behaviour.
+He/she just has to mind that there are three objects and it has the~proper way to~switch between them.
 
-That could be easily achieved if~environment implementation 
-takes complete care of~calculation of~controls position on~the~screen.
-We even think  that there is no need to~have a~way to~choose position manually,
-it~is enough to~have sufficient algorithm giving suited position automatically in~most cases.
+That could be easily achieved if~the~environment implementation 
+takes complete care of~the~calculation of~a~control's position on~the~screen.
+We can even think  that there is no need to~have a~way to~choose the~position manually,
+it~is enough to~have a~sufficient algorithm giving a~suited position automatically in~most cases.
 For~that purpose we would like to~suggest one of~them.
-It~takes tree of~tiles, 
-each node of~it has references to~two children and boolean attribute 
+It~would~take a~tree of~tiles, 
+each node of~it has references to~the~two children and a~boolean attribute 
 whether this node implies dividing  ina~horizontal or vertical way.
-Given screen width and height, it calculates position of each tile on~the~screen.
+Given screen width and height, it calculates the~position of each tile on~the~screen.
 
 \begin{enumerate}
 
 \item {
-Performing Depth-first search on~tiles tree and~calculating 
+Performing Depth-first search on~a~tiles tree and~calculating 
 how many leaves has each branch of~each node.
 }
 
 \item {
-As~a~recursive procedure do following steps:
+As~a~recursive procedure, do the~following steps:
 }
 
 \begin{enumerate}
 
 \item{
-Calling the~procedure providing screen width and height as~well as~root of~the~tree. 
+Call the~procedure providing the~screen width and height as~well as~the~root of~the~tree. 
 }
 
 \item {
-If~the provided node is a~leaf assigning to~it received screen position.
+Indicate if~the provided node is a~leaf assigned to~it received screen position.
 }
 
 \item {
-Performing dividing of~received screen area onto two~parts 
-in~proportions, how many leaves there are under each branch, and handling dividing direction (horizontally or vertically).
-After that performing call of~the~procedure for~each branch providing obtained positions.
+Perform the~dividing of~a~received screen area into two~parts 
+in~proportion, how many leaves there are under each branch, and handle dividing direction (horizontally or vertically).
+After that perform a~call of~the~procedure for~each branch providing the~obtained positions.
 }
 \end{enumerate}
 \end{enumerate}
 
 According to~our experience, this~procedure yields rather good dividing for~each application.
 It~is necessary to~describe what an~application is in~Luwrain design.
-First of~all, we would like to~notice that the~term ``application'' doesn't reflect the~exact nature of~implied object.
-Very likely it would be~better to~call that ``applet'' or ``add-on'' because Luwrain applications 
-are executed in~the~same process as~environment itself (although are able to~initiate separate threats) and share with the~environment the~same memory address space.
+First of~all, we would like to~note that the~term ``application'' doesn't reflect the~exact nature of~the~implied object.
+Very likely it would be~better to~call it an~``applet'' or ``add-on'' because Luwrain applications 
+are executed in~the~same process as~the~environment itself (although they~are able to~initiate separate threats##Threats or threads?##) and share with the~environment the~same memory address space.
 
-The~applications are Java classes which objects are registered in~the~corresponding manager.
-There could be~multiple instances of~particular application (e.~g., user can launch several file managers)
-and in~opposite there is special technique to~prevent some others applications from being launched twice (e.~g., multiple copies of~mail fetching application are pointless).
-In~each time currently only one application can be~shown on~screen 
-and it is one which is considered as~active.
-We are thinking about special type of~applications visible permanently 
-(e.~g., for~displaying news feed)
-but still are not sure whether is~is~really necessary or~not.
-Switching between applications is~performed easily  and quickly with Alt+Tab keys combination.
+The~applications are Java classes where objects are registered in~the~corresponding manager.
+There could be~multiple instances of~a~particular application (e.~g., user can launch several file managers)
+and in~opposite##Why in opposite? Confusing. On the other hand?## there is a~special technique to~prevent some others applications from being launched twice (e.~g., multiple copies of~mail fetching application are pointless).
+In~each case, currently only one application can be~shown on~screen 
+and it is the~one which is considered to~be~active.
+We are thinking about a~special type of~application visible permanently 
+(e.~g., for~displaying news feeds)
+but we still are~not~sure whether it~is~really necessary or~not.
+Switching between applications is~performed easily  and quickly with the~Alt+Tab key combination.
 
-Luwrain distribution implies including a~set of~standard applications.
+With Luwrain distribution comes a~set of~standard applications.
 They are: 
 double-sided file manager,
 extendable text editor,
@@ -515,100 +515,100 @@ calendar,
 address book etc.
 Some sort of~applications can be~provided in~the~form of~extensions
 and we would like to~see them as~a~part of~community-driven activity.
-They are mostly the~clients for~popular websites, like 
+They are mostly clients for~popular websites, like 
 Twitter,
 Yandex and Google services,
-payments systems, 
+payment systems, 
 social networks etc.
 
-It~is necessary to~specially emphasize the~question of~the~clients 
+It~is necessary to~especially emphasize the~question of~clients 
 for~digital government services.
 Their presence in~any~assistive  technologies could have significant social value.
-The~question of~accessible alternative for~office applications remains very arguable.
-As~a~matter of~fact the~office document exchange is~very active and 
-no~doubts that corresponding applications are~needed,
-but a~full functionality which Microsoft Office has is~usually needless.
-With~Luwrain we~intend to~provide such tools 
+The~question of~an~accessible alternative for~office applications remains very arguable.
+Office document exchange is~very active and 
+there~is no~doubt that corresponding applications are~needed,
+but full functionality with Microsoft Office is needless.
+With~Luwrain we~intend to~provide such tools, 
 but the~set of~their features is~defined by~corresponding Java libraries (see below).
-Office documents representation in~text form should be~worked~out 
-but full pages rendering (e.~g., for~printing) apparently remains impossible.
+Office document representation in~text form should be~worked~out, 
+but full page rendering (e.~g., for~printing) apparently remains impossible.
 As~a~partial measure we suggest to~use non-wysiwyg alternatives, such~as Latex, since they are highly accessible,
- although require some training and experience. 
+ although they require some training and experience. 
 
 \subsection{Events dispatching and popup areas}
 
-The various events dispatching techniques, very likely, are an~essential part of~any UI implementation
+The various event dispatching techniques, very likely, are an~essential part of~any UI implementation
 and Luwrain isn't an~exception in~this sense.
 Luwrain has several types of~events with corresponding rules of~their routing.
 They bring information about user actions,
-notifications about changes in~environment and 
+notifications about changes in~the~environment and 
 do multithreading synchronization.
-The~last is~very important feature,
-Luwrain allows applications developers initiate so many execution threads as they need 
-but all interaction with~Luwrain core should be done in~multithreading-safe way
-and Luwrain provide some features for~that.
+The~last is~a~very important feature,
+Luwrain allows application developers to initiate as many execution threads as they need, 
+but all interaction with~the~Luwrain core should be done in~a~multithreading-safe way
+and Luwrain provides some features for~that.
 
-Actually, there is nothing  to~describe in~details 
-except of~one thing: our environment has special type of~areas which applications are able to~show.
-They are so called ``popup'' areas.
-Their main distinguish  is that they can be shown as one method call 
-which ends only on~closing of~corresponding area.
-Since the~environment carries~out in~one single thread 
-this cause some difficulties because popup method call (usually placed in~some event handling code)
-freezes entire event loop execution.
-This~problem is~solved by~implementing multiple event loop instances,
-the~first of~them is a~main environment event loop and each new is~launched for~every new popup area.
-We think it~is a~very usual approach in~UI design.
+Actually, there is nothing  to~describe in~detail 
+except one thing: our environment has special types of~areas which applications are able to~show.
+They are the~so called ``popup'' areas.
+Their main distinguishing characteristics  is that they can be shown as one method call, 
+which ends only on~the~closing of~a~corresponding area.
+Since the~environment carries~out in~one single thread, 
+this causes some difficulties because the~popup method call (usually placed in~some event handling code)
+freezes the~entire event loop execution.
+This~problem is~solved by~implementing multiple event loop instances.
+The~first of~them is a~main environment event loop and each new loop is~launched for~every new popup area.
+We can think of~it~as a~very usual approach in~UI design.
 
 With~popup areas we can~show various dialogs and menus,
-continuing execution depending on~user choice.
+continuing the~execution depending on~user choice.
 For~example, a~couple of~popup areas have system-wide meaning.
-First of~them is~the~main menu which idea is~very close to~the~``Start'' menu for~Microsoft Windows.
-The~another one is~a~command line always accessible on~Alt+X key combination.
-With this prompt user is able to~launch  particular application or do some action with system-wide meaning.
-This feature is~very useful when it~is necessary to~do something in~noisy environment.
-For~example, in~some cases it~is easier to~press Alt+x and type ``mail'' than to~open main menu and listen its items.
+The~first of~them is~the~main menu which is~an~idea very close to~the~``Start'' menu in~Microsoft Windows.
+The~other one is~a~command line always accessible with~the~Alt+X key combination.
+With this prompt a~user is able to~launch  a~particular application or do some action with system-wide meaning.
+This feature is~very useful when it~is necessary to~do something in~a~noisy environment.
+For~example, in~some cases it~is easier to~press the~Alt+x and type ``mail'' than to~open the~main menu and listen to~its items.
 This~idea of~Alt+X command prompt was adopted from~Gnu~Emacs but with some modifications.
 
 \subsection{Why Java?}
 
 Luwrain is~implemented mostly on~Java.
-Its environment is~executed completely inside of~Java virtual machine.
+Its environment is~executed completely inside of~the~Java virtual machine.
 The~main reasons why we use Java is the~large variety of~existing Java libraries
-and Java is currently quite usual language for~any kind of~frameworks and platforms.
-Speaking about libraries, for~instance, if  we are creating a~mail client it isn't necessary to~write all protocol parsers,
-everybody just can take Javamail library \cite{javamail}.
+and Java is currently a~common language for~any kind of~framework and platform.
+Speaking about libraries, for~instance, if  we are creating a~mail client it isn't necessary to~write all the~protocol parsers,
+anyone can just use Javamail library \cite{javamail}.
 Actually the~number of~involved libraries is~relatively large,
-we use Apache~POI \cite{poi} for~office documents format processing 
+so we use Apache~POI \cite{poi} for~office documents format processing 
 (exactly a~functionality of~this library defines how good documents support could be),
-Rome \cite{rome} for~RSS parsing  
+Rome \cite{rome} for~RSS parsing,  
 and many others.
 
-But the~reasons aren't limited only by~question of~libraries.
-Java has rather stable API wich is changed very carefully and moderately 
-(thoughtless API changing in~our opinion is~one of~the~biggest problems in~world of~Open source libraries).
-In~addition, according to~\cite{javaspeed} 
-current Java speed of~execution is~comparable to~the~speed of~C++
-and that is~rather good result
+But the~reasons aren't limited only because of~libraries.
+Java has a~rather stable API which is changed very carefully and moderately 
+(thoughtless API changing in~our opinion is~one of~the~biggest problems in~the~world of~Open source libraries).
+In~addition, \cite{javaspeed} 
+the~current Java speed of~execution is~comparable to~the~speed of~C++
+and that is~a~rather good result
 (sometimes benchmark resources offers information that Java gives 80\% overhead over C++ time).
 
 Some questions related to~Java remain unsolved. 
-There~are some legal concerns, we can see that corporations sue developers over Java \cite{oraclesue}.
-Next, it is unclear could we build something on Dalvik (or on~coming ART) \cite{dalvik}
+There~are some legal concerns, we can see that corporations can sue developers over Java \cite{oraclesue}.
+Next, it is unclear if we could build something on Dalvik (or on~coming ART) \cite{dalvik}
 which looks more efficient for~ARM devices.
 Hopefully, these questions could be~solved in~future.
 
 \subsection{System-level services}
 
-If we are speaking about a~complete OS 
-we should mind various services maintaining network connections and other system tasks 
-as~well as~the~way of~interaction between these services and UI inside of~Java virtual machine.
-Current experience in~GNU/Linux world demonstrate tendency towards  
+If we are speaking about a~complete OS, 
+we should keep~in~mind various services for~maintaining network connections and other system tasks, 
+as~well as~the~way of~interaction between these services and the~UI inside of~the~Java virtual machine.
+Current experience in~the~GNU/Linux world demonstrates a~tendency towards  
 D-Bus \cite{dbus} as~a~tool for~interprocess communication (IPC).
-Java has corresponding interface to~use D-Bus as~well,
+Java has a~corresponding interface to~use D-Bus as~well,
 therefore, we should just choose projects 
-which provide necessary functionality with D-Bus~interface.
-Fortunately, they are present almost for~all~tasks:
+which provide the~necessary functionality with the~D-Bus~interface.
+Fortunately, they are present for~almost~all~tasks:
 
 \begin{enumerate} 
 
@@ -627,94 +627,93 @@ VoiceMan \cite{voiceman} for~speech output
 \end{enumerate}
 
 Network Manager and Udisks are well-known projects,
-speech server VoiceMan has been developed earlier as~a~part of~Luwrain project 
+speech server VoiceMan has been developed earlier as~a~part of~the~Luwrain project, 
 but it is implemented as~a~system service on~C++.
-Currently VoiceMan takes the~text to~speak through inet socket,
+Currently VoiceMan takes text to~speach through the~inet socket,
 but it is just a~temporary measure. 
 
-Actively discussed idea of~Systemd service \cite{systemd}
+An~actively discussed idea of~the~Systemd service \cite{systemd}
 proposed by~Lenard Poettering 
-potentially could be~nicely integrated to~the~system we~are discussing.
-The~installation on~a~hard drive can be~performed by~blind person without any~sighted help 
-using live system cloning technique \cite{livecdclone}
+potentially could be~nicely integrated into~the~system we~are discussing.
+Installation on~a~hard drive can be~performed by~a~blind person without any~sighted help 
+using the~live system cloning technique \cite{livecdclone}
 The~main window of~the~Java environment is~shown with X.org server \cite{xorg}
 using a~custom lightweight window manager.
 
 If`Luwrain is~launched on~Microsoft Windows these features will be~inaccessible 
 or redirected to~corresponding Windows components.
 
-\section{Obtained experience and testing}
+\section{Obtained experience and testing}##I’m not sure if this is the right title for this paragraph(TESTING AND RESULTS)## 
 
 The~experience we already have consists of~two~parts: 
-general conception testing done with~Emacspeak environment 
-and the~user feedback collected on~publication of~first Luwrain prototype.
+a general conception of~testing done in~the~Emacspeak environment 
+and user feedback collected on~the~publication of~the~first Luwrain prototype.
 
-Using proposed conception as~it was~implemented in~Emacspeak was really successful 
-(the~author of~this paper successfully graduated the~university and has~done his Ph.D. thesis having the~machine with~it).
-The~speed of~work is~really high and some tricky operations,
-like the~installation without sighted help, 
-can be achieved.
-Meantime, it~is still difficult to~spread this~experience over other people 
+Using the~proposed conception as~it was~implemented in~Emacspeak was really successful 
+(the~author of~this paper successfully graduated university and has~done his Ph.D. thesis using it on a machine).
+The~efficiency is~really high and handles some tricky operations,
+like an~installation without sighted help.
+In~the~meantime, it~is still difficult to~share this~experience with other people 
 because using GNU~Emacs and Emacspeak requires a~lot of~technical knowledge.
-Some design problems of~GNU~Emacs (e.~g., absence of~such entity as~application at~all)
-don't allow consider it~as~a~platform satisfying modern trends for~~popular products.
+Some design problems of~GNU~Emacs (e.~g., absence of~an~application)
+don't allow us to~consider it~as~a~platform satisfying modern trends for~~popular products.
 
-First Luwrain prototype published in~the~form of~bootable ISO-image 
-has been presented on~March 1st, 2014.
-The~feedback was obtained from~two categories of~users: from newbies and from~experienced users.
+The~first Luwrain prototype published in~the~form of~a~bootable ISO-image 
+was presented on~March 1st, 2014.
+Feedback was obtained from~two categories of~users: from newbies and from~experienced users.
 The~feedback from~newbies is~more valuable because our~system should
 match the~expectations of~wide~range of~users.
-With very short prior comments users easily understood what they should do if~they would reach some particular position 
-as~well as~to~get some application or object opened.
-In~future these comments can be~offered as~brief guide on~system startup.
-The~experienced users wanted to~treat potential success or failure of~the~system 
-as~highly dependent on~chances to~get it~first stable release
-because this~work obviously require a~lot~of development resources.
+With very short prior comments##Do you want to say instructions?## users easily understood what they should do if~they would reach some particular position 
+as~well as~to~use some application or open an~object.
+In~the~future these instructions can be~offered as~brief guide on~system startup.
+Experienced users wanted to~treat the~potential success or failure of~the~system 
+as~being~highly dependent on~the~ability to~get a~first stable release,
+because this~work obviously requires a~lot~of development resources.
 
-After the~discussions with~foreign communities 
+After discussions in~foreign communities, 
 the~authors may expect that there could be~some interest 
-in~solving accessibility problems exactly through~such specialized environments.
+in~solving accessibility problems specifically through~such specialized environments.
 
 \section{Conclusions}
 
-We~have describe all~basic questions related 
-to~special framework for~developing applications for~blind and visually impaired people.
-If~this product could be implemented in~all details
-blind users would get free tool for~the~most of~their everyday operations.
-With it they could read and write mail, track news 
-listen music and books etc.
-All of these things become available  in easy way 
-and  it is also very important.
-We omit the~details of~possible user perception 
+We~have described all~the~basic questions related 
+to~a~special framework for~developing applications for~blind and visually impaired people.
+If~this product could be implemented completely,
+blind users would get a~free tool for~most of~their everyday operations.
+With it they could read and write mail, track news, 
+listen to~music and books, etc.
+All of these things could~become available easily.
+We have omitted the~details of~possible user perception 
 because with this paper the~description is~focused on~Luwrain as~a~framework for~creating accessible applications.
 
-The~suggested approach should be~considered very carefully because  the~accessibility technologies 
-always imply some amount of~things impossible totally.
+The~suggested approach should be~considered very carefully because  accessibility technologies 
+always carry some difficulties some amount of~things impossible totally.
 This~fact is~quite obvious, 
-for~example, there is~no technologies (and very likely will not appear  for~observable future)
-which could be able to~describe in~words an~arbitrary picture.
-Blind people never be able to~do computer aided design and some another tasks with~visual nature.
-We should look for~hopefully sufficient solution but not~perfect ones.
-With this admission, the~project authors are strongly convinced the~proposed conception could solve some rather tough tasks.
-To~obtain it we spent more than ten years of~research work with large number of~experiments.
+for~example, when we see that there are~no technologies (and very likely will not appear  for~observable future)
+which could be able to~describe in~words any~given picture.
+Blind people never will~be able to~do computer aided design and some other tasks in~a~visual nature.
+We should look for~sufficient solutions, but not~perfect ones.
+With this reality, the~project authors are strongly convinced the~proposed conception could solve some rather tough tasks.
+To~obtain it we spent more than ten years in~research including a~large number of~experiments.
 
-It~is~necessary to~treat properly our arguments against GUI.
-Text-based environment should not be~taken as~a~competitor to~GUI.
-With some circumstances the~existing  screen reading solutions for~Microsoft Windows, GNOME or Mac~OS~X
-can be the~only possible.
-For~example, if~somebody must use the~same applications as~everybody in~school or university.
+It~is~necessary to~properly discuss our arguments against GUI.
+A text-based environment should not be~taken as~a~competitor to~GUI.
+In~some circumstances the~existing  screen reading solutions for~Microsoft Windows, GNOME or Mac~OS~X
+can be the~only possible solution.
+For~example, if~somebody must use the~same applications as~everybody in~school or university,
+then this would be the case.
 Surely, the~solutions in~style of~audio desktops 
-should be~aimed at~the~sectors left uncovered with~screen readers.
+should be~aimed at~the~sectors left uncovered with~screen readers.##This sentence is confusing. Please revise.##
 
-We~are still speaking about the~work which is~staying just at~the~phase of~presenting first prototypes.
-And the~goal number one is~to~get it~finished.
-The~real value of~this conception can be~measured only by~probability do~that.
-If~we~are able to~discover some technical questions, 
-another things, related to~the~available models for~such work, remain still obscured.
+We~are still speaking about work which is~just at~the~phase of~representing first prototypes.
+And the~number one goal is~to~get it~finished.
+The~real value of~this conception can be~measured only by~the~probability of~doing~that.
+If~we~are able to~solve some technical questions, 
+other things, related to~the~available models for~such work, still remain obscured.
 On~the~one~hand, this project is Free and Open source, meaning it is non-profitable,
-on~another hand, it~could have some social value. 
+on~the~other hand, it~could have some social value. 
 The~question whether there could be~development models,  more suitable for~this~combination,  or not 
-isn't less important than any~technical discussion.
+isn't less important than any~technical discussion.##This sentence is confusing, please revise.##
 
 %%\bibliographystyle{abbrv}
 %%\bibliography{pozhidaev-luwrain}
